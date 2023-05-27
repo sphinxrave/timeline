@@ -11,13 +11,14 @@ import type {
   Area,
   DrawArgs,
   ScaleHeight,
-  TimeLineOption
+  TimeLineOption,
+  TIME_SPACE_ENUM
 } from './type';
+import { TIME_SPACING } from './type';
 import mitt from 'mitt';
 import throttle from 'lodash.throttle';
 import { dateTime } from './utils/time';
-import { drawHelper } from './draw-helper';
-
+import { drawHelper, formatTime } from './draw-helper';
 
 // 默认配置
 const defaultOptions = {
@@ -29,11 +30,11 @@ const defaultOptions = {
   pointColor: '#00aeec',
   pointWidth: 3,
   scaleSpacing: 7,
-  fps: 60,
+  fps: 120,
   zoom: 2,
-  maxZoom: 9,
+  maxZoom: 7,
   minZoom: 1,
-  timeFormat: 'YYYY/MM/DD HH:mm:ss',
+  timeFormat: 'HH:mm:ss',
 }
 
 class TimeLine {
@@ -45,8 +46,8 @@ class TimeLine {
   private currentTime: number; // 当前时间
   private areas?: Area; // 阴影区域
 
-  #timeSpacingMap: number[]; // 5 10 30 60 120 300 取值范围
-  #timeSpacing: number; // 5 10 30 60 120 300 取值范围
+  #timeSpacingMap: TIME_SPACE_ENUM[]; // 5 10 30 60 120 300 取值范围
+  #timeSpacing: TIME_SPACE_ENUM; // 5 10 30 60 120 300 取值范围
   scaleSpacing: number; // 刻度间距
 
   bgColor: string;
@@ -115,14 +116,13 @@ class TimeLine {
 
     this.currentTime = 0;
     
-    const timeSpacingMap = [1, 10, 30, 60, 120, 300, 7200, 86400, 604800];
     this.#timeSpacingMap = [];
     for (let i = minZoom - 1; i < maxZoom; i++) {
-      this.#timeSpacingMap.push(timeSpacingMap[i]);
+      this.#timeSpacingMap.push(TIME_SPACING[i]);
     }
     
     // this.#timeSpacing = 60; // 时间间距
-    this.#timeSpacing = timeSpacingMap[zoom - 1];
+    this.#timeSpacing = TIME_SPACING[zoom - 1];
     this.scaleSpacing = scaleSpacing; // 默认刻度间距7px
     
 
@@ -159,11 +159,12 @@ class TimeLine {
     // console.time('draw');
     // 拖拽中禁止外部调用,防止冲突
     if (this.#isDraging && !_privateFlag) {
+      console.log("dragging so failing")
       return;
     }
     
     // 获取参数
-    this.currentTime = currentTime || Math.floor(Date.now() / 1000);
+    this.currentTime = currentTime ?? Math.floor(Date.now() / 1000);
     this.areas = areas || [];
 
     // 当前屏可绘制刻度数量
@@ -205,6 +206,7 @@ class TimeLine {
       timeSpacing: this.#timeSpacing,
       screenScaleCount,
       startTime,
+      endTime,
       drawLine: this.drawLine.bind(this),
       drawText: this.drawText.bind(this),
     });
@@ -215,7 +217,7 @@ class TimeLine {
     // 绘制当前时间指针
     this.drawLine(xCenterPoint - this.pointWidth / 2, this.$canvas.height, this.pointWidth, this.pointColor);
     this.drawArea(xCenterPoint - 54, 4, xCenterPoint + 54, 18, this.pointColor);
-    this.drawText(xCenterPoint, 6, `${dateTime(this.currentTime, this.timeFormat)}`, this.textColor, 'center', 'top');
+    this.drawText(xCenterPoint, 6, formatTime(this.currentTime), this.textColor, 'center', 'top');
 
     // 鼠标滚轮事件
     this.$canvas.onwheel = this._onZoom.bind(this);
@@ -230,12 +232,12 @@ class TimeLine {
     let prexOffset = 0;
     document.onmousemove = throttle((moveEvent) => {
       const curxOffset = moveEvent.clientX - clientX;
-      const currentTime = this.currentTime - this.#timeSpacing / this.scaleSpacing * (curxOffset - prexOffset);
+      const currentTime = Math.max(0.01, this.currentTime - this.#timeSpacing / this.scaleSpacing * (curxOffset - prexOffset));
 
       prexOffset = curxOffset;
 
       this.draw({
-        currentTime: Math.round(currentTime),
+        currentTime: currentTime,
         areas: this.areas,
         _privateFlag: true,
       });
@@ -303,40 +305,11 @@ class TimeLine {
     }
   }
   // 绘制比例尺
-  private drawTimelineScale(timespacing: number) {
-    // [1, 10, 30, 60, 120, 300, 7200, 86400, 604800];
-    let text = '';
-    switch (timespacing) {
-      case 1:
-        text = '1s';
-        break;
-      case 10:
-        text = '10s';
-        break;
-      case 30:
-        text = '30s';
-        break;
-      case 60:
-        text = '1min';
-        break;
-      case 120:
-        text = '2min';
-        break;
-      case 300:
-        text = '5min';
-        break;
-      case 7200:
-        text = '2hour';
-        break;
-      case 86400:
-        text = '1day';
-        break;
-      case 604800:
-        text = '1week';
-        break;
-      default:
-        break;
-    }
+  private drawTimelineScale(timespacing: TIME_SPACE_ENUM) {
+    // @TODO change 1,10 to this scale:  10 | 20 | 30 | 60 | 90 | 120 | 180 | 300 | 420;
+    const scale = [10, 20, 30, 60, 90, 120, 180, 300, 420];
+    let text =timespacing < 60 ? `${timespacing}s` : `${timespacing / 60}min`;
+    
     this.drawText(this.scaleSpacing + 12, 9, `${text}`, this.textColor, 'left', 'middle');
 
     this.canvasContext.beginPath();
@@ -363,7 +336,7 @@ class TimeLine {
   // 绘制文字
   private drawText(x: number, y: number, text: string, color: string = this.textColor, align: CanvasTextAlign = 'center', baseLine: CanvasTextBaseline ='alphabetic'): void {
     this.canvasContext.beginPath();
-    this.canvasContext.font = '11px Arial';
+    this.canvasContext.font = '11px Franklin gothic medium';
     this.canvasContext.fillStyle = color;
     this.canvasContext.textAlign = align;
     this.canvasContext.textBaseline = baseLine;

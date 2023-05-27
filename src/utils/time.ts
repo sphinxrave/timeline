@@ -7,9 +7,15 @@
  * @FilePath: \timeline\src\utils\time.ts
  */
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(utc)
+dayjs.extend(duration)
+
 // 时间戳转时间
 export const dateTime = (time: number, format: string = 'MM/DD HH:mm'): string => {
-  return dayjs(time * 1000).format(format);
+  return ( time < 0 ? '-' : '' ) + dayjs(Math.abs(time * 1000)).utc().format(format);
 }
 
 //获得本周的开端日期

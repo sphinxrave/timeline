@@ -48,14 +48,18 @@ export type TimeLineOption = {
   timeFormat?: string;
 }
 
+export const TIME_SPACING = [1, 1.5, 2, 2.5, 3, 5, 8, 12] as const;
+export type TIME_SPACE_ENUM = typeof TIME_SPACING[number];
+
 export type DrawHelperOption = {
   pointWidth: number;
   timePerPixel: number;
   scaleHeight: ScaleHeight;
   scaleSpacing: number;
-  timeSpacing: number;
+  timeSpacing: TIME_SPACE_ENUM;
   screenScaleCount: number;
   startTime: number;
+  endTime: number;
   drawLine: Function;
   drawText: Function;
 }
