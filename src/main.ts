@@ -75,11 +75,15 @@ class TimeLine {
   // timeFormat
   // timeFormat: string;
 
-  constructor(id: string, options: TimeLineOption) {
+  constructor(id: string | HTMLCanvasElement, options: TimeLineOption) {
     if (!id) {
       throw new Error("canvas id is required!");
     }
-    this.$canvas = document.getElementById(id) as HTMLCanvasElement;
+    if(typeof id == 'string') {
+      this.$canvas = document.getElementById(id) as HTMLCanvasElement;
+    } else {
+      this.$canvas = id;
+    }
     this.canvasContext = this.$canvas.getContext(
       "2d"
     ) as CanvasRenderingContext2D;
