@@ -10,12 +10,15 @@ export type AreaItem = {
   endTime: number;
   bgColor?: string;
 }
-export type Area = AreaItem[];
 
 export type DrawArgs = {
-  currentTime?: number;
-  zoom?: number;
-  areas?: Area;
+  currentTime: number;
+  // zoom?: number;
+  areas?: AreaItem[];
+  /**
+   * waveform should be a [ second, value ] sorted array where the second value is between 0-100
+   */
+  waveform?: [number, number][];
   _privateFlag?: boolean;
 }
 
@@ -45,7 +48,7 @@ export type TimeLineOption = {
   zoom?: number;
   maxZoom?: number;
   minZoom?: number;
-  timeFormat?: string;
+  // timeFormat?: string;
 }
 
 export const TIME_SPACING = [1, 1.5, 2, 2.5, 3, 5, 8, 12] as const;

@@ -72,13 +72,11 @@ export function drawHelper({
         ? scaleHeight.height3
         : scaleHeight.height1;
 
-    const position = (tick - startTime) / secondsPerPixel + pointWidth / 2;
+    const position = (tick - startTime) / secondsPerPixel - pointWidth;
     drawLine(position, height);
 
     if (height === scaleHeight.height5) {
       const timeText = formatTime(tick);
-      console.log(timeText);
-
       drawText(position, height + 13, timeText);
     }
   }

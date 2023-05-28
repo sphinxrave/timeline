@@ -11,7 +11,7 @@ const timeline = new MoeTimeline('timeline', {
   fill: false,
   width: 1000,
   height: 60,
-  // bgColor: 'rgba(0,0,0,0.5)',
+  bgColor: 'rgba(0,0,0,0.9)',
   // textColor: '#000',
   // pointColor: '#000',
   // centerTimePointColor: '#000',
@@ -24,17 +24,33 @@ const timeline = new MoeTimeline('timeline', {
   // timeFormat: 'YYYY/MM/DD HH:mm:ss'
 });
 
+function generateNumberPairs(count: number) {
+  var pairs: [number, number][] = [];
+  var currentNumber = 0;
+  
+  for (var i = 0; i < count; i++) {
+    currentNumber += 0.1;
+    var smoothRandom = Math.random() * 0.1 - 0.05; // Adjust the smoothness here
+    
+    var pair = [currentNumber, Math.abs(Math.sin(currentNumber) + smoothRandom) * 40] as [number, number];
+    pairs.push(pair);
+  }
+  
+  return pairs;
+}
+
 timeline.draw({
   currentTime: 120,
-  areas: [{
-    startTime: 40,
-    endTime: 87,
-    // bgColor: '#00AEEC'
-  },{
-    startTime: 110,
-    endTime: 140,
-    // bgColor: '#00AEEC'
-  }],
+  // areas: [{
+  //   startTime: 40,
+  //   endTime: 87,
+  //   // bgColor: '#00AEEC'
+  // },{
+  //   startTime: 110,
+  //   endTime: 140,
+  //   // bgColor: '#00AEEC'
+  // }],
+  waveform: generateNumberPairs(1000),
 });
 
 // let a = 120;

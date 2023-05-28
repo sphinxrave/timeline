@@ -35,11 +35,13 @@ declare type TimeLineOption = {
 };
 
 declare type CallFunction = (params:number) => void;
+declare type DragFunction = (params:number) => void;
 
 declare class Timeline {
   constructor(id: string, option?: TimeLineOption);
   draw(option: DrawArgs ): void;
   on(type: 'timeUpdate', call: CallFunction): void;
+  on(type: 'drag', call: DragFunction): void;
 }
 
 export = Timeline;
