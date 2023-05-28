@@ -18,7 +18,7 @@ import { TIME_SPACING } from "./type";
 import mitt from "mitt";
 import throttle from "lodash.throttle";
 import { drawHelper, formatTime } from "./draw-helper";
-import {gte} from 'sorted-array-functions';
+import { gte } from "sorted-array-functions";
 
 // 默认配置
 const defaultOptions = {
@@ -69,6 +69,9 @@ class TimeLine {
   #isDraging: boolean;
   // fps
   fps: number;
+
+  startTime: number;
+  endTime: number;
   // timeFormat
   // timeFormat: string;
 
@@ -173,6 +176,16 @@ class TimeLine {
     this.fps = fps;
     // timeFormat
     // this.timeFormat = timeFormat;
+
+    // caching the start and end time
+    const screenScaleCount = Math.ceil(this.$canvas.width / this.scaleSpacing);
+    // 当前屏显示秒数
+    const screenSecondCount = screenScaleCount * this.#timeSpacing;
+
+    // 开始时间
+    this.startTime = this.currentTime - screenSecondCount / 2;
+    // 结束时间
+    this.endTime = this.currentTime + screenSecondCount / 2;
   }
 
   // 绘制时间轴
@@ -205,6 +218,10 @@ class TimeLine {
     // 每1px所占时间单位（秒）
     const timePerPixel = screenSecondCount / this.$canvas.width;
 
+    if (_privateFlag) {
+      this.emit("drag", startTime, endTime);
+    }
+
     // 清空画布及事件
     this.clear();
 
@@ -234,14 +251,14 @@ class TimeLine {
     let runningSum = 0;
     let runningCount = 0;
     let limit = Math.max(1, Math.min(Math.floor(this.#timeSpacing), 10));
-    let startIdx = gte(this.waveform, [startTime - 1, 0], (a,b) => {
+    let startIdx = gte(this.waveform, [startTime - 1, 0], (a, b) => {
       const k = a[0] - b[0];
-      if(k<0) return -1;
-      if(k>0) return 1;
-      return 0
+      if (k < 0) return -1;
+      if (k > 0) return 1;
+      return 0;
     });
-    if(startIdx === -1) startIdx = this.waveform.length; 
-    for (let i = startIdx; i < this.waveform.length ; i++) {
+    if (startIdx === -1) startIdx = this.waveform.length;
+    for (let i = startIdx; i < this.waveform.length; i++) {
       const item = this.waveform[i];
       if (item[0] > endTime + 1) break;
       runningCount += 1;
@@ -336,7 +353,7 @@ class TimeLine {
       document.onmousemove = null;
       document.onmouseup = null;
       this.#isDraging = false;
-      this.emit("timeUpdate", this.currentTime);
+      this.emit("timeUpdate", this.currentTime, this.startTime, this.endTime);
     };
   }
   // 缩放
