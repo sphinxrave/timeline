@@ -1,15 +1,15 @@
 var H = Object.defineProperty;
 var U = (e, t, i) => t in e ? H(e, t, { enumerable: !0, configurable: !0, writable: !0, value: i }) : e[t] = i;
-var C = (e, t, i) => (U(e, typeof t != "symbol" ? t + "" : t, i), i), B = (e, t, i) => {
+var g = (e, t, i) => (U(e, typeof t != "symbol" ? t + "" : t, i), i), z = (e, t, i) => {
   if (!t.has(e))
     throw TypeError("Cannot " + i);
 };
-var g = (e, t, i) => (B(e, t, "read from private field"), i ? i.call(e) : t.get(e)), I = (e, t, i) => {
+var u = (e, t, i) => (z(e, t, "read from private field"), i ? i.call(e) : t.get(e)), O = (e, t, i) => {
   if (t.has(e))
     throw TypeError("Cannot add the same private member more than once");
   t instanceof WeakSet ? t.add(e) : t.set(e, i);
-}, T = (e, t, i, n) => (B(e, t, "write to private field"), n ? n.call(e, i) : t.set(e, i), i);
-const L = [1, 1.5, 2, 2.5, 3, 5, 8, 12];
+}, w = (e, t, i, n) => (z(e, t, "write to private field"), n ? n.call(e, i) : t.set(e, i), i);
+const A = [1, 1.5, 2, 2.5, 3, 5, 8, 12];
 function Y(e) {
   return { all: e = e || /* @__PURE__ */ new Map(), on: function(t, i) {
     var n = e.get(t);
@@ -26,67 +26,67 @@ function Y(e) {
     });
   } };
 }
-var W = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, F = "Expected a function", z = 0 / 0, q = "[object Symbol]", J = /^\s+|\s+$/g, K = /^[-+]0x[0-9a-f]+$/i, Q = /^0b[01]+$/i, V = /^0o[0-7]+$/i, tt = parseInt, et = typeof W == "object" && W && W.Object === Object && W, it = typeof self == "object" && self && self.Object === Object && self, nt = et || it || Function("return this")(), at = Object.prototype, st = at.toString, rt = Math.max, ot = Math.min, _ = function() {
+var P = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, D = "Expected a function", R = 0 / 0, q = "[object Symbol]", J = /^\s+|\s+$/g, K = /^[-+]0x[0-9a-f]+$/i, Q = /^0b[01]+$/i, V = /^0o[0-7]+$/i, tt = parseInt, et = typeof P == "object" && P && P.Object === Object && P, it = typeof self == "object" && self && self.Object === Object && self, nt = et || it || Function("return this")(), at = Object.prototype, st = at.toString, rt = Math.max, ot = Math.min, Z = function() {
   return nt.Date.now();
 };
 function ht(e, t, i) {
-  var n, a, h, c, s, m, r = 0, l = !1, p = !1, w = !0;
+  var n, a, h, c, s, d, r = 0, l = !1, p = !1, b = !0;
   if (typeof e != "function")
-    throw new TypeError(F);
-  t = A(t) || 0, P(i) && (l = !!i.leading, p = "maxWait" in i, h = p ? rt(A(i.maxWait) || 0, t) : h, w = "trailing" in i ? !!i.trailing : w);
-  function v(d) {
-    var S = n, E = a;
-    return n = a = void 0, r = d, c = e.apply(E, S), c;
+    throw new TypeError(D);
+  t = F(t) || 0, j(i) && (l = !!i.leading, p = "maxWait" in i, h = p ? rt(F(i.maxWait) || 0, t) : h, b = "trailing" in i ? !!i.trailing : b);
+  function v(m) {
+    var k = n, W = a;
+    return n = a = void 0, r = m, c = e.apply(W, k), c;
   }
-  function x(d) {
-    return r = d, s = setTimeout(u, t), l ? v(d) : c;
+  function x(m) {
+    return r = m, s = setTimeout(T, t), l ? v(m) : c;
   }
-  function o(d) {
-    var S = d - m, E = d - r, Z = t - S;
-    return p ? ot(Z, h - E) : Z;
+  function o(m) {
+    var k = m - d, W = m - r, L = t - k;
+    return p ? ot(L, h - W) : L;
   }
-  function f(d) {
-    var S = d - m, E = d - r;
-    return m === void 0 || S >= t || S < 0 || p && E >= h;
+  function f(m) {
+    var k = m - d, W = m - r;
+    return d === void 0 || k >= t || k < 0 || p && W >= h;
   }
-  function u() {
-    var d = _();
-    if (f(d))
-      return M(d);
-    s = setTimeout(u, o(d));
+  function T() {
+    var m = Z();
+    if (f(m))
+      return y(m);
+    s = setTimeout(T, o(m));
   }
-  function M(d) {
-    return s = void 0, w && n ? v(d) : (n = a = void 0, c);
+  function y(m) {
+    return s = void 0, b && n ? v(m) : (n = a = void 0, c);
   }
-  function X() {
-    s !== void 0 && clearTimeout(s), r = 0, n = m = a = s = void 0;
+  function $() {
+    s !== void 0 && clearTimeout(s), r = 0, n = d = a = s = void 0;
   }
-  function G() {
-    return s === void 0 ? c : M(_());
+  function B() {
+    return s === void 0 ? c : y(Z());
   }
-  function j() {
-    var d = _(), S = f(d);
-    if (n = arguments, a = this, m = d, S) {
+  function _() {
+    var m = Z(), k = f(m);
+    if (n = arguments, a = this, d = m, k) {
       if (s === void 0)
-        return x(m);
+        return x(d);
       if (p)
-        return s = setTimeout(u, t), v(m);
+        return s = setTimeout(T, t), v(d);
     }
-    return s === void 0 && (s = setTimeout(u, t)), c;
+    return s === void 0 && (s = setTimeout(T, t)), c;
   }
-  return j.cancel = X, j.flush = G, j;
+  return _.cancel = $, _.flush = B, _;
 }
 function ct(e, t, i) {
   var n = !0, a = !0;
   if (typeof e != "function")
-    throw new TypeError(F);
-  return P(i) && (n = "leading" in i ? !!i.leading : n, a = "trailing" in i ? !!i.trailing : a), ht(e, t, {
+    throw new TypeError(D);
+  return j(i) && (n = "leading" in i ? !!i.leading : n, a = "trailing" in i ? !!i.trailing : a), ht(e, t, {
     leading: n,
     maxWait: t,
     trailing: a
   });
 }
-function P(e) {
+function j(e) {
   var t = typeof e;
   return !!e && (t == "object" || t == "function");
 }
@@ -96,23 +96,23 @@ function lt(e) {
 function ft(e) {
   return typeof e == "symbol" || lt(e) && st.call(e) == q;
 }
-function A(e) {
+function F(e) {
   if (typeof e == "number")
     return e;
   if (ft(e))
-    return z;
-  if (P(e)) {
+    return R;
+  if (j(e)) {
     var t = typeof e.valueOf == "function" ? e.valueOf() : e;
-    e = P(t) ? t + "" : t;
+    e = j(t) ? t + "" : t;
   }
   if (typeof e != "string")
     return e === 0 ? e : +e;
   e = e.replace(J, "");
   var i = Q.test(e);
-  return i || V.test(e) ? tt(e.slice(2), i ? 2 : 8) : K.test(e) ? z : +e;
+  return i || V.test(e) ? tt(e.slice(2), i ? 2 : 8) : K.test(e) ? R : +e;
 }
-var R = ct;
-function ut({
+var N = ct;
+function mt({
   pointWidth: e,
   timeSpacing: t,
   scaleSpacing: i,
@@ -122,7 +122,7 @@ function ut({
   drawLine: c,
   drawText: s
 }) {
-  const m = t / i;
+  const d = t / i;
   let r, l;
   switch (t) {
     case 1:
@@ -152,26 +152,26 @@ function ut({
     default:
       throw new Error(`Unsupported zoom level: ${t}`);
   }
-  let p = Math.floor(a / r) * r, w = Math.floor(h / r) * r;
-  for (let v = p; v <= w; v += r) {
-    const x = v % l === 0 ? n.height5 : v % (l / 2) === 0 ? n.height3 : n.height1, o = (v - a) / m - e;
+  let p = Math.floor(a / r) * r, b = Math.floor(h / r) * r;
+  for (let v = p; v <= b; v += r) {
+    const x = v % l === 0 ? n.height5 : v % (l / 2) === 0 ? n.height3 : n.height1, o = (v - a) / d - e;
     if (c(o, x), x === n.height5) {
-      const f = N(v);
+      const f = X(v);
       s(o, x + 13, f);
     }
   }
 }
-function N(e) {
+function X(e) {
   const t = Math.floor(e / 60 / 60), i = Math.floor(e / 60), n = Math.floor(e % 60);
   return `${t ? t.toString().padStart(2, "0") + ":" : ""}${i.toString().padStart(2, "0")}:${n.toString().padStart(2, "0")}`;
 }
-var dt = gt;
-function D(e, t) {
+var ut = dt;
+function G(e, t) {
   return e === t ? 0 : e < t ? -1 : 1;
 }
-function gt(e, t, i) {
-  i || (i = D);
-  var n = mt(e, t, i);
+function dt(e, t, i) {
+  i || (i = G);
+  var n = gt(e, t, i);
   if (n === -1)
     return -1;
   for (; n < e.length; n++) {
@@ -181,8 +181,8 @@ function gt(e, t, i) {
   }
   return -1;
 }
-function mt(e, t, i) {
-  i || (i = D);
+function gt(e, t, i) {
+  i || (i = G);
   for (var n = e.length, a = n - 1, h = 0, c = -1; a >= h && h >= 0 && a < n; ) {
     c = Math.floor((a + h) / 2);
     var s = i(e[c], t);
@@ -206,30 +206,32 @@ const vt = {
   maxZoom: 7,
   minZoom: 1
 };
-var y, $, b, O, k;
+var M, S, C, E, I;
 class Ct {
   constructor(t, i) {
-    C(this, "$canvas");
-    C(this, "canvasContext");
-    I(this, y, void 0);
-    C(this, "currentTime");
-    C(this, "areas");
-    C(this, "waveform");
-    I(this, $, void 0);
-    I(this, b, void 0);
-    C(this, "scaleSpacing");
-    C(this, "bgColor");
-    I(this, O, void 0);
-    C(this, "pointWidth");
-    C(this, "pointColor");
-    C(this, "textColor");
-    C(this, "scaleColor");
-    C(this, "areaBgColor");
-    I(this, k, void 0);
-    C(this, "fps");
+    g(this, "$canvas");
+    g(this, "canvasContext");
+    O(this, M, void 0);
+    g(this, "currentTime");
+    g(this, "areas");
+    g(this, "waveform");
+    O(this, S, void 0);
+    O(this, C, void 0);
+    g(this, "scaleSpacing");
+    g(this, "bgColor");
+    O(this, E, void 0);
+    g(this, "pointWidth");
+    g(this, "pointColor");
+    g(this, "textColor");
+    g(this, "scaleColor");
+    g(this, "areaBgColor");
+    O(this, I, void 0);
+    g(this, "fps");
+    g(this, "startTime");
+    g(this, "endTime");
     if (!t)
       throw new Error("canvas id is required!");
-    this.$canvas = document.getElementById(t), this.canvasContext = this.$canvas.getContext(
+    typeof t == "string" ? this.$canvas = document.getElementById(t) : this.$canvas = t, this.canvasContext = this.$canvas.getContext(
       "2d"
     );
     const {
@@ -238,11 +240,11 @@ class Ct {
       height: h,
       bgColor: c,
       textColor: s,
-      scaleColor: m,
+      scaleColor: d,
       areaBgColor: r,
       pointColor: l,
       pointWidth: p,
-      scaleSpacing: w,
+      scaleSpacing: b,
       fps: v,
       zoom: x,
       maxZoom: o,
@@ -259,67 +261,69 @@ class Ct {
     if (o < f)
       throw new Error("maxZoom must be greater than minZoom");
     if (n) {
-      const u = this.$canvas.parentElement;
-      this.$canvas.width = u.clientWidth, this.$canvas.height = u.clientHeight, new ResizeObserver(
-        R(this._onParentResize.bind(this), 200)
-      ).observe(u);
+      const $ = this.$canvas.parentElement;
+      this.$canvas.width = $.clientWidth, this.$canvas.height = $.clientHeight, new ResizeObserver(
+        N(this._onParentResize.bind(this), 200)
+      ).observe($);
     } else
       a && (this.$canvas.width = a), h && (this.$canvas.height = h);
-    T(this, k, !1), T(this, y, Y()), this.currentTime = 0, T(this, $, []);
-    for (let u = f - 1; u < o; u++)
-      g(this, $).push(L[u]);
-    T(this, b, L[x - 1]), this.scaleSpacing = w, T(this, O, {
+    w(this, I, !1), w(this, M, Y()), this.currentTime = 0, w(this, S, []);
+    for (let $ = f - 1; $ < o; $++)
+      u(this, S).push(A[$]);
+    w(this, C, A[x - 1]), this.scaleSpacing = b, w(this, E, {
       height6: this.$canvas.height / 2,
       height5: this.$canvas.height / 3,
       height4: this.$canvas.height / 4,
       height3: this.$canvas.height / 5,
       height2: this.$canvas.height / 8 + 1,
       height1: this.$canvas.height / 10 + 1
-    }), this.bgColor = c, this.pointWidth = p, this.pointColor = l, this.textColor = s, this.scaleColor = m, this.areaBgColor = r, this.fps = v;
+    }), this.bgColor = c, this.pointWidth = p, this.pointColor = l, this.textColor = s, this.scaleColor = d, this.areaBgColor = r, this.fps = v;
+    const y = Math.ceil(this.$canvas.width / this.scaleSpacing) * u(this, C);
+    this.startTime = this.currentTime - y / 2, this.endTime = this.currentTime + y / 2;
   }
   draw({ currentTime: t, areas: i, waveform: n, _privateFlag: a }) {
-    if (g(this, k) && !a) {
+    if (u(this, I) && !a) {
       console.log("dragging so failing");
       return;
     }
     this.currentTime = t, this.areas = i || [], this.waveform = n || [];
-    const h = Math.ceil(this.$canvas.width / this.scaleSpacing), c = h * g(this, b), s = this.currentTime - c / 2, m = this.currentTime + c / 2, r = this.$canvas.width / 2, l = c / this.$canvas.width;
-    this.clear(), this.drawArea(0, 0, this.$canvas.width, this.$canvas.height, this.bgColor), this.areas.forEach((o) => {
-      const f = o.startTime < s ? 0 : Math.floor((o.startTime - s) / l), u = o.endTime > m ? this.$canvas.width : Math.floor((o.endTime - s) / l);
+    const h = Math.ceil(this.$canvas.width / this.scaleSpacing), c = h * u(this, C), s = this.currentTime - c / 2, d = this.currentTime + c / 2, r = this.$canvas.width / 2, l = c / this.$canvas.width;
+    a && this.emit("drag", s, d), this.clear(), this.drawArea(0, 0, this.$canvas.width, this.$canvas.height, this.bgColor), this.areas.forEach((o) => {
+      const f = o.startTime < s ? 0 : Math.floor((o.startTime - s) / l), T = o.endTime > d ? this.$canvas.width : Math.floor((o.endTime - s) / l);
       this.drawArea(
         f,
         0,
-        u,
+        T,
         this.$canvas.height,
         o.bgColor || this.areaBgColor
       );
     }), this.canvasContext.beginPath();
-    let p = 0, w = 0, v = Math.max(1, Math.min(Math.floor(g(this, b)), 10)), x = dt(this.waveform, [s - 1, 0], (o, f) => {
-      const u = o[0] - f[0];
-      return u < 0 ? -1 : u > 0 ? 1 : 0;
+    let p = 0, b = 0, v = Math.max(1, Math.min(Math.floor(u(this, C)), 10)), x = ut(this.waveform, [s - 1, 0], (o, f) => {
+      const T = o[0] - f[0];
+      return T < 0 ? -1 : T > 0 ? 1 : 0;
     });
     x === -1 && (x = this.waveform.length);
     for (let o = x; o < this.waveform.length; o++) {
       const f = this.waveform[o];
-      if (f[0] > m + 1)
+      if (f[0] > d + 1)
         break;
-      if (w += 1, p += f[1], w == v) {
-        const u = (f[0] - s + 0.025) / l, M = (this.$canvas.height - (this.$canvas.height - 10) * (p / w / 100)) / 2;
-        this.canvasContext.moveTo(u, M), this.canvasContext.lineTo(u, this.$canvas.height - M), p = 0, w = 0;
+      if (b += 1, p += f[1], b == v) {
+        const T = (f[0] - s + 0.025) / l, y = (this.$canvas.height - (this.$canvas.height - 10) * (p / b / 100)) / 2;
+        this.canvasContext.moveTo(T, y), this.canvasContext.lineTo(T, this.$canvas.height - y), p = 0, b = 0;
       }
     }
-    return this.canvasContext.strokeStyle = this.areaBgColor, this.canvasContext.lineWidth = Math.min(1, 0.05 / l * v), this.canvasContext.stroke(), ut.bind(this)({
+    return this.canvasContext.strokeStyle = this.areaBgColor, this.canvasContext.lineWidth = Math.min(1, 0.05 / l * v), this.canvasContext.stroke(), mt.bind(this)({
       pointWidth: this.pointWidth,
       timePerPixel: l,
-      scaleHeight: g(this, O),
+      scaleHeight: u(this, E),
       scaleSpacing: this.scaleSpacing,
-      timeSpacing: g(this, b),
+      timeSpacing: u(this, C),
       screenScaleCount: h,
       startTime: s,
-      endTime: m,
+      endTime: d,
       drawLine: this.drawLine.bind(this),
       drawText: this.drawText.bind(this)
-    }), this.drawTimelineScale(g(this, b)), this.drawLine(
+    }), this.drawTimelineScale(u(this, C)), this.drawLine(
       r - this.pointWidth / 2,
       this.$canvas.height,
       this.pointWidth,
@@ -327,20 +331,20 @@ class Ct {
     ), this.drawArea(r - 54, 4, r + 54, 18, this.pointColor), this.drawText(
       r,
       6,
-      N(this.currentTime),
+      X(this.currentTime),
       this.textColor,
       "center",
       "top"
-    ), this.$canvas.onwheel = this._onZoom.bind(this), this.$canvas.onmousedown = this._onDrag.bind(this), { startTime: s, endTime: m };
+    ), this.$canvas.onwheel = this._onZoom.bind(this), this.$canvas.onmousedown = this._onDrag.bind(this), { startTime: s, endTime: d };
   }
   _onDrag({ clientX: t }) {
-    T(this, k, !0);
+    w(this, I, !0);
     let i = 0;
-    document.onmousemove = R(
+    document.onmousemove = N(
       (n) => {
         const a = n.clientX - t, h = Math.max(
           0.01,
-          this.currentTime - g(this, b) / this.scaleSpacing * (a - i)
+          this.currentTime - u(this, C) / this.scaleSpacing * (a - i)
         );
         i = a, this.draw({
           currentTime: h,
@@ -349,22 +353,22 @@ class Ct {
           _privateFlag: !0
         });
       },
-      g(this, b) === 1 ? 100 : 1e3 / this.fps
+      u(this, C) === 1 ? 100 : 1e3 / this.fps
     ), document.onmouseup = () => {
-      document.onmousemove = null, document.onmouseup = null, T(this, k, !1), this.emit("timeUpdate", this.currentTime);
+      document.onmousemove = null, document.onmouseup = null, w(this, I, !1), this.emit("timeUpdate", this.currentTime, this.startTime, this.endTime);
     };
   }
   _onZoom(t) {
     t.preventDefault();
-    const i = g(this, $).findIndex(
-      (n) => n === g(this, b)
+    const i = u(this, S).findIndex(
+      (n) => n === u(this, C)
     );
-    t.deltaY < 0 && i > 0 ? (T(this, b, g(this, $)[i - 1]), this.draw({
+    t.deltaY < 0 && i > 0 ? (w(this, C, u(this, S)[i - 1]), this.draw({
       currentTime: this.currentTime,
       areas: this.areas,
       waveform: this.waveform,
       _privateFlag: !0
-    })) : t.deltaY > 0 && i < g(this, $).length - 1 && (T(this, b, g(this, $)[i + 1]), this.draw({
+    })) : t.deltaY > 0 && i < u(this, S).length - 1 && (w(this, C, u(this, S)[i + 1]), this.draw({
       currentTime: this.currentTime,
       areas: this.areas,
       waveform: this.waveform,
@@ -373,7 +377,7 @@ class Ct {
   }
   _onParentResize() {
     const t = this.$canvas.parentNode;
-    !t || (this.$canvas.width = t.clientWidth, this.$canvas.height = t.clientHeight, T(this, O, {
+    !t || (this.$canvas.width = t.clientWidth, this.$canvas.height = t.clientHeight, w(this, E, {
       height6: this.$canvas.height / 2,
       height5: this.$canvas.height / 3,
       height4: this.$canvas.height / 4,
@@ -415,16 +419,16 @@ class Ct {
     this.canvasContext.beginPath(), this.canvasContext.rect(t, i, n - t, a - i), this.canvasContext.fillStyle = h, this.canvasContext.fill();
   }
   on(t, i) {
-    g(this, y).on(t, i);
+    u(this, M).on(t, i);
   }
   off(t, i) {
-    g(this, y).off(t, i);
+    u(this, M).off(t, i);
   }
   emit(...t) {
-    g(this, y).emit(...t);
+    u(this, M).emit(...t);
   }
 }
-y = new WeakMap(), $ = new WeakMap(), b = new WeakMap(), O = new WeakMap(), k = new WeakMap();
+M = new WeakMap(), S = new WeakMap(), C = new WeakMap(), E = new WeakMap(), I = new WeakMap();
 export {
   Ct as default
 };
