@@ -19,7 +19,7 @@ declare type DrawArgs = {
    * waveform should be a [ second, value ] sorted array where the second value is between 0-100
    */
   waveform?: [number, number][];
-  _privateFlag?: boolean;
+//   _privateFlag?: boolean;
 };
 
 declare type TimeLineOption = {
@@ -47,7 +47,7 @@ declare type CallFunction = (
 declare type DragFunction = (startTime: number, endTime: number) => void;
 
 declare class Timeline {
-  constructor(id: string, option?: TimeLineOption);
+  constructor(id: string | HTMLCanvasElement, option?: TimeLineOption);
   draw(option: DrawArgs): { startTime: number; endTime: number };
   on(type: "timeUpdate", call: CallFunction): void;
   on(type: "drag", call: DragFunction): void;
