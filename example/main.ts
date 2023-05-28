@@ -39,6 +39,8 @@ function generateNumberPairs(count: number) {
   return pairs;
 }
 
+const data = generateNumberPairs(1000)
+
 timeline.draw({
   currentTime: 120,
   // areas: [{
@@ -50,16 +52,16 @@ timeline.draw({
   //   endTime: 140,
   //   // bgColor: '#00AEEC'
   // }],
-  waveform: generateNumberPairs(1000),
+  waveform: data,
 });
 
-// let a = 120;
-// setInterval(() => {
-//   timeline.draw({ currentTime: a+=0.01 })
-// }, 10);
+let a = 120;
+setInterval(() => {
+  timeline.draw({ currentTime: a+=0.01,   waveform: data  })
+}, 10);
 
 timeline.on('timeUpdate', (e: number) => {
-  // a = Math.max(0, e);
+  a = Math.max(0, e);
 })
 
 console.log(timeline);
