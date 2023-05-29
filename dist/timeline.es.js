@@ -30,24 +30,24 @@ var P = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : ty
   return nt.Date.now();
 };
 function ht(e, t, i) {
-  var n, s, c, r, a, u, o = 0, l = !1, p = !1, b = !0;
+  var n, s, c, r, a, u, o = 0, l = !1, C = !1, b = !0;
   if (typeof e != "function")
     throw new TypeError(D);
-  t = F(t) || 0, j(i) && (l = !!i.leading, p = "maxWait" in i, c = p ? rt(F(i.maxWait) || 0, t) : c, b = "trailing" in i ? !!i.trailing : b);
+  t = F(t) || 0, j(i) && (l = !!i.leading, C = "maxWait" in i, c = C ? rt(F(i.maxWait) || 0, t) : c, b = "trailing" in i ? !!i.trailing : b);
   function g(m) {
     var k = n, W = s;
     return n = s = void 0, o = m, r = e.apply(W, k), r;
   }
-  function x(m) {
+  function p(m) {
     return o = m, a = setTimeout(T, t), l ? g(m) : r;
   }
   function h(m) {
     var k = m - u, W = m - o, B = t - k;
-    return p ? ot(B, c - W) : B;
+    return C ? ot(B, c - W) : B;
   }
   function f(m) {
     var k = m - u, W = m - o;
-    return u === void 0 || k >= t || k < 0 || p && W >= c;
+    return u === void 0 || k >= t || k < 0 || C && W >= c;
   }
   function T() {
     var m = _();
@@ -68,8 +68,8 @@ function ht(e, t, i) {
     var m = _(), k = f(m);
     if (n = arguments, s = this, u = m, k) {
       if (a === void 0)
-        return x(u);
-      if (p)
+        return p(u);
+      if (C)
         return a = setTimeout(T, t), g(u);
     }
     return a === void 0 && (a = setTimeout(T, t)), r;
@@ -152,17 +152,17 @@ function mt({
     default:
       throw new Error(`Unsupported zoom level: ${t}`);
   }
-  let p = Math.floor(s / o) * o, b = Math.floor(c / o) * o;
-  for (let g = p; g <= b; g += o) {
-    const x = g % l === 0 ? n.height5 : g % (l / 2) === 0 ? n.height3 : n.height1, h = (g - s) / u - e;
-    if (r(h, x), x === n.height5) {
+  let C = Math.floor(s / o) * o, b = Math.floor(c / o) * o;
+  for (let g = C; g <= b; g += o) {
+    const p = g % l === 0 ? n.height5 : g % (l / 2) === 0 ? n.height3 : n.height1, h = (g - s) / u - e;
+    if (r(h, p), p === n.height5) {
       const f = H(g);
-      a(h, x + 13, f);
+      a(h, n.height5 + 6, f);
     }
   }
 }
 function H(e) {
-  const t = Math.floor(e / 60 / 60), i = Math.floor(e / 60), n = Math.floor(e % 60);
+  const t = Math.floor(e / 60 / 60), i = Math.floor(Math.abs(e) / 60), n = Math.floor(Math.abs(e) % 60);
   return `${t ? t.toString().padStart(2, "0") + ":" : ""}${i.toString().padStart(2, "0")}:${n.toString().padStart(2, "0")}`;
 }
 var dt = ut;
@@ -206,7 +206,7 @@ const gt = {
   maxZoom: 7,
   minZoom: 1
 };
-var M, S, C, O, E;
+var M, S, x, O, E;
 class Ct {
   constructor(t, i) {
     v(this, "$canvas");
@@ -216,7 +216,7 @@ class Ct {
     v(this, "areas");
     v(this, "waveform");
     I(this, S, void 0);
-    I(this, C, void 0);
+    I(this, x, void 0);
     v(this, "scaleSpacing");
     v(this, "bgColor");
     I(this, O, void 0);
@@ -243,14 +243,14 @@ class Ct {
       scaleColor: u,
       areaBgColor: o,
       pointColor: l,
-      pointWidth: p,
+      pointWidth: C,
       scaleSpacing: b,
       fps: g,
-      zoom: x,
+      zoom: p,
       maxZoom: h,
       minZoom: f
     } = { ...gt, ...i };
-    if (x < f || x > h || x % 1 !== 0)
+    if (p < f || p > h || p % 1 !== 0)
       throw new Error(
         `zoom must be minZoom ~ maxZoom(${f} ~1 ${h}), and must be an integer`
       );
@@ -270,15 +270,15 @@ class Ct {
     w(this, E, !1), w(this, M, Y()), this.currentTime = 0, w(this, S, []);
     for (let $ = f - 1; $ < h; $++)
       d(this, S).push(A[$]);
-    w(this, C, A[x - 1]), this.scaleSpacing = b, w(this, O, {
+    w(this, x, A[p - 1]), this.scaleSpacing = b, w(this, O, {
       height6: this.$canvas.height / 2,
       height5: this.$canvas.height / 3,
       height4: this.$canvas.height / 4,
       height3: this.$canvas.height / 5,
       height2: this.$canvas.height / 8 + 1,
       height1: this.$canvas.height / 10 + 1
-    }), this.bgColor = r, this.pointWidth = p, this.pointColor = l, this.textColor = a, this.scaleColor = u, this.areaBgColor = o, this.fps = g;
-    const y = Math.ceil(this.$canvas.width / this.scaleSpacing) * d(this, C);
+    }), this.bgColor = r, this.pointWidth = C, this.pointColor = l, this.textColor = a, this.scaleColor = u, this.areaBgColor = o, this.fps = g;
+    const y = Math.ceil(this.$canvas.width / this.scaleSpacing) * d(this, x);
     this.startTime = this.currentTime - y / 2, this.endTime = this.currentTime + y / 2;
   }
   draw({ currentTime: t, areas: i, waveform: n, _privateFlag: s }) {
@@ -287,7 +287,7 @@ class Ct {
       return;
     }
     this.currentTime = t, this.areas = i || [], this.waveform = n || [];
-    const c = Math.ceil(this.$canvas.width / this.scaleSpacing), r = c * d(this, C), a = this.currentTime - r / 2, u = this.currentTime + r / 2, o = this.$canvas.width / 2, l = r / this.$canvas.width;
+    const c = Math.ceil(this.$canvas.width / this.scaleSpacing), r = c * d(this, x), a = this.currentTime - r / 2, u = this.currentTime + r / 2, o = this.$canvas.width / 2, l = r / this.$canvas.width;
     s && this.emit("drag", a, u), this.clear(), this.drawArea(0, 0, this.$canvas.width, this.$canvas.height, this.bgColor), this.areas.forEach((h) => {
       const f = h.startTime < a ? 0 : Math.floor((h.startTime - a) / l), T = h.endTime > u ? this.$canvas.width : Math.floor((h.endTime - a) / l);
       this.drawArea(
@@ -298,18 +298,18 @@ class Ct {
         h.bgColor || this.areaBgColor
       );
     }), this.canvasContext.beginPath();
-    let p = 0, b = 0, g = Math.max(1, Math.min(Math.floor(d(this, C)), 10)), x = dt(this.waveform, [a - 1, 0], (h, f) => {
+    let C = 0, b = 0, g = Math.max(1, Math.min(Math.floor(d(this, x)), 10)), p = dt(this.waveform, [a - 1, 0], (h, f) => {
       const T = h[0] - f[0];
       return T < 0 ? -1 : T > 0 ? 1 : 0;
     });
-    x === -1 && (x = this.waveform.length);
-    for (let h = x; h < this.waveform.length; h++) {
+    p === -1 && (p = this.waveform.length);
+    for (let h = p; h < this.waveform.length; h++) {
       const f = this.waveform[h];
       if (f[0] > u + 1)
         break;
-      if (b += 1, p += f[1], b == g) {
-        const T = (f[0] - a + 0.025) / l, y = (this.$canvas.height - (this.$canvas.height - 10) * (p / b / 100)) / 2;
-        this.canvasContext.moveTo(T, y), this.canvasContext.lineTo(T, this.$canvas.height - y), p = 0, b = 0;
+      if (b += 1, C += f[1], b == g) {
+        const T = (f[0] - a + 0.025) / l, y = (this.$canvas.height - (this.$canvas.height - 10) * (C / b / 100)) / 2;
+        this.canvasContext.moveTo(T, y), this.canvasContext.lineTo(T, this.$canvas.height - y), C = 0, b = 0;
       }
     }
     return this.canvasContext.strokeStyle = this.areaBgColor, this.canvasContext.lineWidth = Math.min(1, 0.05 / l * g), this.canvasContext.stroke(), mt.bind(this)({
@@ -317,13 +317,13 @@ class Ct {
       timePerPixel: l,
       scaleHeight: d(this, O),
       scaleSpacing: this.scaleSpacing,
-      timeSpacing: d(this, C),
+      timeSpacing: d(this, x),
       screenScaleCount: c,
       startTime: a,
       endTime: u,
       drawLine: this.drawLine.bind(this),
       drawText: this.drawText.bind(this)
-    }), this.drawTimelineScale(d(this, C)), this.drawLine(
+    }), this.drawTimelineScale(d(this, x)), this.drawLine(
       o - this.pointWidth / 2,
       this.$canvas.height,
       this.pointWidth,
@@ -344,7 +344,7 @@ class Ct {
       (c) => {
         const r = c.clientX - t, a = Math.max(
           0.01,
-          this.currentTime - d(this, C) / this.scaleSpacing * (r - i)
+          this.currentTime - d(this, x) / this.scaleSpacing * (r - i)
         );
         i = r, this.draw({
           currentTime: a,
@@ -353,7 +353,7 @@ class Ct {
           _privateFlag: !0
         });
       },
-      d(this, C) === 1 ? 100 : 1e3 / this.fps
+      d(this, x) === 1 ? 100 : 1e3 / this.fps
     ), s = () => {
       document.removeEventListener("mousemove", n), document.removeEventListener("mouseup", s), w(this, E, !1), this.emit("timeUpdate", this.currentTime, this.startTime, this.endTime);
     };
@@ -362,14 +362,14 @@ class Ct {
   _onZoom(t) {
     t.preventDefault();
     const i = d(this, S).findIndex(
-      (n) => n === d(this, C)
+      (n) => n === d(this, x)
     );
-    t.deltaY < 0 && i > 0 ? (w(this, C, d(this, S)[i - 1]), this.draw({
+    t.deltaY < 0 && i > 0 ? (w(this, x, d(this, S)[i - 1]), this.draw({
       currentTime: this.currentTime,
       areas: this.areas,
       waveform: this.waveform,
       _privateFlag: !0
-    })) : t.deltaY > 0 && i < d(this, S).length - 1 && (w(this, C, d(this, S)[i + 1]), this.draw({
+    })) : t.deltaY > 0 && i < d(this, S).length - 1 && (w(this, x, d(this, S)[i + 1]), this.draw({
       currentTime: this.currentTime,
       areas: this.areas,
       waveform: this.waveform,
@@ -429,7 +429,7 @@ class Ct {
     d(this, M).emit(...t);
   }
 }
-M = new WeakMap(), S = new WeakMap(), C = new WeakMap(), O = new WeakMap(), E = new WeakMap();
+M = new WeakMap(), S = new WeakMap(), x = new WeakMap(), O = new WeakMap(), E = new WeakMap();
 export {
   Ct as default
 };

@@ -77,7 +77,7 @@ export function drawHelper({
 
     if (height === scaleHeight.height5) {
       const timeText = formatTime(tick);
-      drawText(position, height + 13, timeText);
+      drawText(position, scaleHeight.height5 + 6, timeText);
     }
   }
 }
@@ -90,8 +90,8 @@ export function drawHelper({
  */
 export function formatTime(tick: number): string {
   const hours = Math.floor(tick / 60 / 60);
-  const minutes = Math.floor(tick / 60);
-  const seconds = Math.floor(tick % 60);
+  const minutes = Math.floor(Math.abs(tick) / 60);
+  const seconds = Math.floor(Math.abs(tick) % 60);
   const timeText = `${hours ? hours.toString().padStart(2, "0") + ':' : ''}${minutes.toString().padStart(2, "0")}:${seconds
     .toString()
     .padStart(2, "0")}`;
