@@ -223,7 +223,7 @@ class TimeLine {
     const timePerPixel = screenSecondCount / this.$canvas.width;
 
     if (_privateFlag) {
-      this.emit("drag", startTime, endTime);
+      this.emit("drag", [startTime, endTime]);
     }
 
     // 清空画布及事件
@@ -357,7 +357,7 @@ class TimeLine {
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
       this.#isDraging = false;
-      this.emit("timeUpdate", this.currentTime, this.startTime, this.endTime);
+      this.emit("timeUpdate", [this.currentTime, this.startTime, this.endTime]);
     };
   
     document.addEventListener('mousemove', mouseMoveHandler);

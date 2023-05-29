@@ -288,7 +288,7 @@ class Ct {
     }
     this.currentTime = t, this.areas = i || [], this.waveform = n || [];
     const c = Math.ceil(this.$canvas.width / this.scaleSpacing), r = c * d(this, x), a = this.currentTime - r / 2, u = this.currentTime + r / 2, o = this.$canvas.width / 2, l = r / this.$canvas.width;
-    s && this.emit("drag", a, u), this.clear(), this.drawArea(0, 0, this.$canvas.width, this.$canvas.height, this.bgColor), this.areas.forEach((h) => {
+    s && this.emit("drag", [a, u]), this.clear(), this.drawArea(0, 0, this.$canvas.width, this.$canvas.height, this.bgColor), this.areas.forEach((h) => {
       const f = h.startTime < a ? 0 : Math.floor((h.startTime - a) / l), T = h.endTime > u ? this.$canvas.width : Math.floor((h.endTime - a) / l);
       this.drawArea(
         f,
@@ -355,7 +355,7 @@ class Ct {
       },
       d(this, x) === 1 ? 100 : 1e3 / this.fps
     ), s = () => {
-      document.removeEventListener("mousemove", n), document.removeEventListener("mouseup", s), w(this, E, !1), this.emit("timeUpdate", this.currentTime, this.startTime, this.endTime);
+      document.removeEventListener("mousemove", n), document.removeEventListener("mouseup", s), w(this, E, !1), this.emit("timeUpdate", [this.currentTime, this.startTime, this.endTime]);
     };
     document.addEventListener("mousemove", n), document.addEventListener("mouseup", s);
   }
