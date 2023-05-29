@@ -332,7 +332,7 @@ class TimeLine {
   private _onDrag({ clientX }: MouseEvent) {
     this.#isDraging = true;
     let prexOffset = 0;
-    document.onmousemove = throttle(
+    const mouseMoveHandler = throttle(
       (moveEvent) => {
         const curxOffset = moveEvent.clientX - clientX;
         const currentTime = Math.max(
@@ -340,9 +340,9 @@ class TimeLine {
           this.currentTime -
             (this.#timeSpacing / this.scaleSpacing) * (curxOffset - prexOffset)
         );
-
+  
         prexOffset = curxOffset;
-
+  
         this.draw({
           currentTime: currentTime,
           areas: this.areas,
@@ -352,13 +352,16 @@ class TimeLine {
       },
       this.#timeSpacing === 1 ? 100 : 1000 / this.fps
     );
-
-    document.onmouseup = () => {
-      document.onmousemove = null;
-      document.onmouseup = null;
+  
+    const mouseUpHandler = () => {
+      document.removeEventListener('mousemove', mouseMoveHandler);
+      document.removeEventListener('mouseup', mouseUpHandler);
       this.#isDraging = false;
       this.emit("timeUpdate", this.currentTime, this.startTime, this.endTime);
     };
+  
+    document.addEventListener('mousemove', mouseMoveHandler);
+    document.addEventListener('mouseup', mouseUpHandler);
   }
   // 缩放
   private _onZoom(e: WheelEvent) {
