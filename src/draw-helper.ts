@@ -77,7 +77,8 @@ export function drawHelper({
 
     if (height === scaleHeight.height5) {
       const timeText = formatTime(tick);
-      drawText(position, scaleHeight.height5 + 6, timeText);
+      drawText(position, scaleHeight.height6, timeText); // this is drawing upside down so using height6 will put it perfectly in the middle.
+      // this is because y comes in 0 at the top left, but drawLine has height logic to place it on the bottom instead. Weird stuff.
     }
   }
 }

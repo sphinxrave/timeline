@@ -157,7 +157,7 @@ function mt({
     const p = g % l === 0 ? n.height5 : g % (l / 2) === 0 ? n.height3 : n.height1, h = (g - s) / u - e;
     if (r(h, p), p === n.height5) {
       const f = H(g);
-      a(h, n.height5 + 6, f);
+      a(h, n.height6, f);
     }
   }
 }
