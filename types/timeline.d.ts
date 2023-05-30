@@ -39,12 +39,17 @@ declare type TimeLineOption = {
   minZoom?: number;
 };
 
+/**
+ * newTime is [currentTime, startTime, endTime]
+ */
 declare type CallFunction = (
-  newTime: number,
-  startTime: number,
-  endTime: number
+  newTime: [number, number, number],
 ) => void;
-declare type DragFunction = (startTime: number, endTime: number) => void;
+
+/**
+ * s is [startTime, endTime]
+ */
+declare type DragFunction = (s: [number, number]) => void;
 
 declare class Timeline {
   constructor(id: string | HTMLCanvasElement, option?: TimeLineOption);
