@@ -253,9 +253,10 @@ class TimeLine {
     });
 
     this.canvasContext.beginPath();
+    this.canvasContext.lineCap = 'round';
     let runningSum = 0;
     let runningCount = 0;
-    let limit = Math.max(1, Math.min(Math.floor(this.#timeSpacing), 10));
+    let limit = Math.max(1, Math.min(Math.floor(this.#timeSpacing / 3), 10));
     let startIdx = gte(this.waveform, [startTime - 1, 0], (a, b) => {
       const k = a[0] - b[0];
       if (k < 0) return -1;
@@ -283,7 +284,7 @@ class TimeLine {
       }
     }
     this.canvasContext.strokeStyle = this.areaBgColor;
-    this.canvasContext.lineWidth = Math.min(1, (0.05 / timePerPixel) * limit);
+    this.canvasContext.lineWidth = Math.max(1, (0.05 / timePerPixel) * limit);
     this.canvasContext.stroke();
 
     // 绘制刻度

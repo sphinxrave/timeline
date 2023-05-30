@@ -37,24 +37,24 @@ export function drawHelper({
       majorTickInterval = 10;
       break;
     case 2.5:
-      minorTickInterval = 1;
-      majorTickInterval = 10;
-      break;
-    case 3:
-      minorTickInterval = 1;
-      majorTickInterval = 10;
-      break;
-    case 5:
       minorTickInterval = 2;
       majorTickInterval = 20;
       break;
+    case 3:
+      minorTickInterval = 2;
+      majorTickInterval = 20;
+      break;
+    case 5:
+      minorTickInterval = 5;
+      majorTickInterval = 50;
+      break;
     case 8:
-      minorTickInterval = 3;
-      majorTickInterval = 30;
+      minorTickInterval = 8;
+      majorTickInterval = 40;
       break;
     case 12:
-      minorTickInterval = 4;
-      majorTickInterval = 40;
+      minorTickInterval = 10;
+      majorTickInterval = 100;
       break;
     default:
       throw new Error(`Unsupported zoom level: ${timeSpacing}`);
@@ -64,7 +64,7 @@ export function drawHelper({
   // const startOffset: number = (startTime / minorTickInterval - (startTime / minorTickInterval) ) * minorTickInterval;
   let endTick = endTime * 10;
 
-  for (let tick = Math.floor(startTick); tick <= Math.ceil(endTick); tick += minorTickInterval) {
+  for (let tick = Math.floor(startTick / minorTickInterval) * minorTickInterval; tick <= Math.ceil(endTick); tick += minorTickInterval) {
     const height =
       tick % majorTickInterval === 0
         ? scaleHeight.height5
