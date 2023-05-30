@@ -25,8 +25,8 @@ export function drawHelper({
   let minorTickInterval, majorTickInterval;
   switch (timeSpacing) {
     case 1:
-      minorTickInterval = 0.5;
-      majorTickInterval = 5;
+      minorTickInterval = 1;
+      majorTickInterval = 10;
       break;
     case 1.5:
       minorTickInterval = 1;
@@ -60,11 +60,11 @@ export function drawHelper({
       throw new Error(`Unsupported zoom level: ${timeSpacing}`);
   }
 
-  let startTick = Math.floor(startTime / minorTickInterval) * minorTickInterval;
-  // const startOffset: number = (startTime / minorTickInterval - Math.floor(startTime / minorTickInterval) ) * minorTickInterval;
-  let endTick = Math.floor(endTime / minorTickInterval) * minorTickInterval;
+  let startTick = startTime * 10;
+  // const startOffset: number = (startTime / minorTickInterval - (startTime / minorTickInterval) ) * minorTickInterval;
+  let endTick = endTime * 10;
 
-  for (let tick = startTick; tick <= endTick; tick += minorTickInterval) {
+  for (let tick = Math.floor(startTick); tick <= Math.ceil(endTick); tick += minorTickInterval) {
     const height =
       tick % majorTickInterval === 0
         ? scaleHeight.height5
@@ -72,11 +72,11 @@ export function drawHelper({
         ? scaleHeight.height3
         : scaleHeight.height1;
 
-    const position = (tick - startTime) / secondsPerPixel - pointWidth;
+    const position = (tick/10 - startTime) / secondsPerPixel - pointWidth / 2;
     drawLine(position, height);
 
     if (height === scaleHeight.height5) {
-      const timeText = formatTime(tick);
+      const timeText = formatTime(tick/10);
       drawText(position, scaleHeight.height6, timeText); // this is drawing upside down so using height6 will put it perfectly in the middle.
       // this is because y comes in 0 at the top left, but drawLine has height logic to place it on the bottom instead. Weird stuff.
     }

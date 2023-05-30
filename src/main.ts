@@ -140,9 +140,10 @@ class TimeLine {
       if (height) this.$canvas.height = height;
     }
 
+    
     this.#isDraging = false;
     this.#emitter = mitt();
-
+    
     this.currentTime = 0;
 
     this.#timeSpacingMap = [];
@@ -207,7 +208,7 @@ class TimeLine {
     this.waveform = waveform || [];
 
     // 当前屏可绘制刻度数量
-    const screenScaleCount = Math.ceil(this.$canvas.width / this.scaleSpacing);
+    const screenScaleCount = (this.$canvas.width / this.scaleSpacing);
     // 当前屏显示秒数
     const screenSecondCount = screenScaleCount * this.#timeSpacing;
 

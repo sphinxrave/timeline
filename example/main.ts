@@ -8,7 +8,7 @@
 import MoeTimeline from '../src/main';
 
 const timeline = new MoeTimeline('timeline', {
-  fill: false,
+  fill: true,
   width: 1000,
   height: 60,
   bgColor: 'rgba(0,0,0,0.9)',
@@ -16,7 +16,7 @@ const timeline = new MoeTimeline('timeline', {
   // pointColor: '#000',
   // centerTimePointColor: '#000',
   // centerTimePointWidth: 5,
-  scaleSpacing: 15,
+  scaleSpacing: 80,
   maxZoom: 8,
   minZoom: 1,
   zoom: 2,
@@ -42,7 +42,7 @@ function generateNumberPairs(count: number) {
 const data = generateNumberPairs(1000)
 
 timeline.draw({
-  currentTime: 120,
+  currentTime: 11,
   // areas: [{
   //   startTime: 40,
   //   endTime: 87,
@@ -55,13 +55,13 @@ timeline.draw({
   waveform: data,
 });
 
-let a = 120;
-setInterval(() => {
-  timeline.draw({ currentTime: a+=0.01,   waveform: data  })
-}, 10);
+// let a = 11;
+// setInterval(() => {
+//   timeline.draw({ currentTime: a+=0.01,   waveform: data  })
+// }, 10);
 
-timeline.on('timeUpdate', (e: number) => {
-  a = Math.max(0, e);
-})
+// timeline.on('timeUpdate', ([e]: number) => {
+//   a = Math.max(0, e);
+// })
 
 console.log(timeline);
