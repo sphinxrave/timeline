@@ -42,20 +42,20 @@ declare type TimeLineOption = {
 /**
  * newTime is [currentTime, startTime, endTime]
  */
-declare type CallFunction = (
-  newTime: [number, number, number],
+declare type TimeUpdateFn = (
+  newTime: [number,],
 ) => void;
 
 /**
  * s is [startTime, endTime]
  */
-declare type DragFunction = (s: [number, number]) => void;
+declare type DragUpdateFn = (s: [number, number]) => void;
 
 declare class Timeline {
   constructor(id: string | HTMLCanvasElement, option?: TimeLineOption);
   draw(option: DrawArgs): { startTime: number; endTime: number };
-  on(type: "timeUpdate", call: CallFunction): void;
-  on(type: "drag", call: DragFunction): void;
+  on(type: "timeUpdate", call: TimeUpdateFn): void;
+  on(type: "drag", call: DragUpdateFn): void;
 }
 
 export = Timeline;

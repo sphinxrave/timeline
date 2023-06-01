@@ -359,7 +359,7 @@ class TimeLine {
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
       this.#isDraging = false;
-      this.emit("timeUpdate", [this.currentTime, this.startTime, this.endTime]);
+      this.emit("timeUpdate", [this.currentTime]);
     };
   
     document.addEventListener('mousemove', mouseMoveHandler);

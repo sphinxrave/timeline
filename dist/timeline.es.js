@@ -30,16 +30,16 @@ var P = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : ty
   return nt.Date.now();
 };
 function ht(e, t, i) {
-  var n, a, c, r, s, u, o = 0, l = !1, C = !1, b = !0;
+  var n, a, c, r, s, u, o = 0, l = !1, C = !1, T = !0;
   if (typeof e != "function")
     throw new TypeError(D);
-  t = F(t) || 0, j(i) && (l = !!i.leading, C = "maxWait" in i, c = C ? rt(F(i.maxWait) || 0, t) : c, b = "trailing" in i ? !!i.trailing : b);
+  t = F(t) || 0, j(i) && (l = !!i.leading, C = "maxWait" in i, c = C ? rt(F(i.maxWait) || 0, t) : c, T = "trailing" in i ? !!i.trailing : T);
   function g(m) {
     var k = n, W = a;
     return n = a = void 0, o = m, r = e.apply(W, k), r;
   }
   function p(m) {
-    return o = m, s = setTimeout(T, t), l ? g(m) : r;
+    return o = m, s = setTimeout(b, t), l ? g(m) : r;
   }
   function h(m) {
     var k = m - u, W = m - o, B = t - k;
@@ -49,14 +49,14 @@ function ht(e, t, i) {
     var k = m - u, W = m - o;
     return u === void 0 || k >= t || k < 0 || C && W >= c;
   }
-  function T() {
+  function b() {
     var m = _();
     if (f(m))
       return y(m);
-    s = setTimeout(T, h(m));
+    s = setTimeout(b, h(m));
   }
   function y(m) {
-    return s = void 0, b && n ? g(m) : (n = a = void 0, r);
+    return s = void 0, T && n ? g(m) : (n = a = void 0, r);
   }
   function $() {
     s !== void 0 && clearTimeout(s), o = 0, n = u = a = s = void 0;
@@ -70,9 +70,9 @@ function ht(e, t, i) {
       if (s === void 0)
         return p(u);
       if (C)
-        return s = setTimeout(T, t), g(u);
+        return s = setTimeout(b, t), g(u);
     }
-    return s === void 0 && (s = setTimeout(T, t)), r;
+    return s === void 0 && (s = setTimeout(b, t)), r;
   }
   return L.cancel = $, L.flush = Z, L;
 }
@@ -152,8 +152,8 @@ function mt({
     default:
       throw new Error(`Unsupported zoom level: ${t}`);
   }
-  let C = a * 10, b = c * 10;
-  for (let g = Math.floor(C / o) * o; g <= Math.ceil(b); g += o) {
+  let C = a * 10, T = c * 10;
+  for (let g = Math.floor(C / o) * o; g <= Math.ceil(T); g += o) {
     const p = g % l === 0 ? n.height5 : g % (l / 2) === 0 ? n.height3 : n.height1, h = (g / 10 - a) / u - e / 2;
     if (r(h, p), p === n.height5) {
       const f = H(g / 10);
@@ -244,7 +244,7 @@ class Ct {
       areaBgColor: o,
       pointColor: l,
       pointWidth: C,
-      scaleSpacing: b,
+      scaleSpacing: T,
       fps: g,
       zoom: p,
       maxZoom: h,
@@ -270,7 +270,7 @@ class Ct {
     w(this, E, !1), w(this, M, Y()), this.currentTime = 0, w(this, S, []);
     for (let $ = f - 1; $ < h; $++)
       d(this, S).push(A[$]);
-    w(this, x, A[p - 1]), this.scaleSpacing = b, w(this, O, {
+    w(this, x, A[p - 1]), this.scaleSpacing = T, w(this, O, {
       height6: this.$canvas.height / 2,
       height5: this.$canvas.height / 3,
       height4: this.$canvas.height / 4,
@@ -289,27 +289,27 @@ class Ct {
     this.currentTime = t, this.areas = i || [], this.waveform = n || [];
     const c = this.$canvas.width / this.scaleSpacing, r = c * d(this, x), s = this.currentTime - r / 2, u = this.currentTime + r / 2, o = this.$canvas.width / 2, l = r / this.$canvas.width;
     a && this.emit("drag", [s, u]), this.clear(), this.drawArea(0, 0, this.$canvas.width, this.$canvas.height, this.bgColor), this.areas.forEach((h) => {
-      const f = h.startTime < s ? 0 : Math.floor((h.startTime - s) / l), T = h.endTime > u ? this.$canvas.width : Math.floor((h.endTime - s) / l);
+      const f = h.startTime < s ? 0 : Math.floor((h.startTime - s) / l), b = h.endTime > u ? this.$canvas.width : Math.floor((h.endTime - s) / l);
       this.drawArea(
         f,
         0,
-        T,
+        b,
         this.$canvas.height,
         h.bgColor || this.areaBgColor
       );
     }), this.canvasContext.beginPath(), this.canvasContext.lineCap = "round";
-    let C = 0, b = 0, g = Math.max(1, Math.min(Math.floor(d(this, x) / 3), 10)), p = dt(this.waveform, [s - 1, 0], (h, f) => {
-      const T = h[0] - f[0];
-      return T < 0 ? -1 : T > 0 ? 1 : 0;
+    let C = 0, T = 0, g = Math.max(1, Math.min(Math.floor(d(this, x) / 3), 10)), p = dt(this.waveform, [s - 1, 0], (h, f) => {
+      const b = h[0] - f[0];
+      return b < 0 ? -1 : b > 0 ? 1 : 0;
     });
     p === -1 && (p = this.waveform.length);
     for (let h = p; h < this.waveform.length; h++) {
       const f = this.waveform[h];
       if (f[0] > u + 1)
         break;
-      if (b += 1, C += f[1], b == g) {
-        const T = (f[0] - s + 0.025) / l, y = (this.$canvas.height - (this.$canvas.height - 10) * (C / b / 100)) / 2;
-        this.canvasContext.moveTo(T, y), this.canvasContext.lineTo(T, this.$canvas.height - y), C = 0, b = 0;
+      if (T += 1, C += f[1], T == g) {
+        const b = (f[0] - s + 0.025) / l, y = (this.$canvas.height - (this.$canvas.height - 10) * (C / T / 100)) / 2;
+        this.canvasContext.moveTo(b, y), this.canvasContext.lineTo(b, this.$canvas.height - y), C = 0, T = 0;
       }
     }
     return this.canvasContext.strokeStyle = this.areaBgColor, this.canvasContext.lineWidth = Math.max(1, 0.05 / l * g), this.canvasContext.stroke(), mt.bind(this)({
@@ -355,7 +355,7 @@ class Ct {
       },
       d(this, x) === 1 ? 100 : 1e3 / this.fps
     ), a = () => {
-      document.removeEventListener("mousemove", n), document.removeEventListener("mouseup", a), w(this, E, !1), this.emit("timeUpdate", [this.currentTime, this.startTime, this.endTime]);
+      document.removeEventListener("mousemove", n), document.removeEventListener("mouseup", a), w(this, E, !1), this.emit("timeUpdate", [this.currentTime]);
     };
     document.addEventListener("mousemove", n), document.addEventListener("mouseup", a);
   }
